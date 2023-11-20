@@ -22,10 +22,12 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { db } from '@/lib/db/db';
+// import { db } from '@/lib/db/db';
 import { eq } from 'drizzle-orm';
-import { companies } from '@/lib/db/schema';
+// import { companies } from '@/lib/db/schema2';
+// import { findCompanyWithAccessCode, getUserData, joinCompany } from '@/lib/db/actions';
 import { toast } from "react-hot-toast"
+import { useSession } from 'next-auth/react';
 
 type Props = {
     open: boolean;
@@ -36,6 +38,7 @@ const formSchema = z.object({
 })
 
 const JoinCompanyModal = ({ open, setOpen }: Props) => {
+    // const { data: session } = useSession();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -44,15 +47,20 @@ const JoinCompanyModal = ({ open, setOpen }: Props) => {
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        const company = await db.query.companies.findFirst({
-            where: eq(companies.accessCode, values.accessCode),
-        });
+        // const company = await findCompanyWithAccessCode(values.accessCode);
+        // const user = await getUserData();
+        // // console.log(user)
 
-        if (!company) return toast.error('Invalid Access Code', {
-            style: {
-                backgroundColor: "#333"
-            }
-        })
+        // if (!company) return toast.error('Invalid Access Code', {
+        //     style: {
+        //         backgroundColor: "#333",
+        //         color: "white"
+        //     }
+        // });
+
+
+        // const join = await joinCompany(company.id, user?.id!);
+        // console.log(join);
     }
 
     return (

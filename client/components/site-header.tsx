@@ -22,7 +22,6 @@ import UserNav from './user-nav';
 
 const SiteHeader = () => {
     const pathname = usePathname();
-    const { data: session, status } = useSession();
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="container py-2 flex flex-row justify-between">
@@ -83,7 +82,7 @@ const SiteHeader = () => {
                 </div>
                 <div className="flex flex-row gap-2">
                     <nav className="flex items-center gap-2">
-                        <UserNav /> 
+                        <UserNav />
                     </nav>
                 </div>
             </div>

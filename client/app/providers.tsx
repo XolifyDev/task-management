@@ -12,9 +12,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
             defaultTheme="system"
             enableSystem
         >
-            <NextAuthProvider>
-                {children}
-            </NextAuthProvider>
+            {/* <NextAuthProvider> */}
+            {children}
+            {/* </NextAuthProvider> */}
         </ThemeProvider>
     )
 }

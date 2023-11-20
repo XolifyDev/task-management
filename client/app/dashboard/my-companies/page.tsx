@@ -1,5 +1,7 @@
 "use client";
 
+"use client";
+
 import { Skeleton } from '@/components/ui/skeleton';
 import { signIn, useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react'
@@ -13,6 +15,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { AuthSession } from '@supabase/supabase-js';
 import { SessionStatus, User } from '@/lib/types';
 import { getUserData } from '@/lib/db/actions';
+import Table from './_components/table';
 
 const Page = () => {
     const [joinCompanyModal, setJoinCompanyModal] = useState(false);
@@ -44,9 +47,13 @@ const Page = () => {
     if (sessionStatus === "loading") return <Icons.spinner className='h-20 w-20 mx-auto animate-spin' />
 
     return (
-        <>
-            Dashboard
-        </>
+        <div className='flex flex-col w-full'>
+            <div className="mt-20 h-1"></div>
+            <h1 className="text-xl font-bold text-left">
+                My Companies
+            </h1>
+            <Table />
+        </div>
     )
 }
 

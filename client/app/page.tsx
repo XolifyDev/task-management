@@ -2,15 +2,38 @@
 
 import { Button } from '@/components/ui/button';
 import { signIn, useSession } from 'next-auth/react';
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
+import { AuthSession } from '@supabase/supabase-js';
+import { useEffect, useState } from 'react';
+import { SessionStatus, User } from '@/lib/types';
+import { getUserData } from '@/lib/db/actions';
 
 export default function Home() {
-  const { data: session, status: sessionStatus } = useSession();
+  // const { data: session, status: sessionStatus } = useSession();
   const router = useRouter();
+  const supabase = createClientComponentClient();
+  const [session, setSession] = useState<User | undefined>(undefined);
+  const [sessionStatus, setSessionStatus] = useState<SessionStatus>("loading");
+
+
+  useEffect(() => {
+    get();
+  }, []);
+
+  const get = async () => {
+    const user = await getUserData();
+
+    setSession(user as User);
+    setSessionStatus(!user ? "unauthenticated" : "authenticated")
+  }
+
 
   const onClick = async () => {
-    if (sessionStatus === "unauthenticated") return signIn('google');
+    if (sessionStatus === "unauthenticated") return await supabase.auth.signInWithOAuth({
+      provider: "google"
+    });
     if (sessionStatus === "authenticated") return router.push("/dashboard?getstarted=true");
   }
   return (
