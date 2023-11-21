@@ -4,12 +4,27 @@ import { DataTable } from './data-table';
 import { getMyCompanies } from '@/lib/db/actions'
 import React, { useEffect, useState } from 'react'
 import { Company, columns } from './columns';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 const Table = () => {
     const [data, setData] = useState<any>([]);
+    const supabase = createClientComponentClient();
 
     useEffect(() => {
+        const channel = supabase.realtime.channel("my_companies").on("postgres_changes",
+            {
+                event: "*",
+                schema: "public"
+            },
+            (payload) => {
+                set();
+            }
+        ).subscribe();
         set();
+
+        return () => {
+            channel.unsubscribe();
+        }
     }, [])
 
     const set = async () => {
@@ -18,7 +33,8 @@ const Table = () => {
         setData(s.map((c) => {
             return {
                 name: c.name,
-                created_at: c.created_at
+                created_at: c.created_at,
+                id: c.id
             }
         }));
     }

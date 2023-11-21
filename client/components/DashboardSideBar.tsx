@@ -35,7 +35,7 @@ const DashboardSideBar = () => {
                 <>
                     <Avatar className="h-20 w-20 mt-20">
                         <AvatarImage className="bg-neutral-400 dark:bg-neutral-800" src={session?.avatar_url!} />
-                        <AvatarFallback>{session?.full_name?.slice(0, 1)}</AvatarFallback>
+                        <AvatarFallback className='text-3xl'>{session?.full_name?.slice(0, 1)}</AvatarFallback>
                     </Avatar>
                     <p className="text-xl font-bold">
                         Hey {session?.full_name}! <span className="text-2xl">👋</span>

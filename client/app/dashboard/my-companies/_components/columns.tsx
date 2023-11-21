@@ -14,6 +14,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button";
+import { removeCompany } from "@/lib/db/actions";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -66,7 +67,7 @@ export const columns: ColumnDef<Company>[] = [
                             Edit
                             <DropdownMenuShortcut><Pencil2Icon className="h-[18px] w-[18px]" fontSize={20} /></DropdownMenuShortcut>
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer">
+                        <DropdownMenuItem onClick={() => removeCompany(row.original.id)} className="cursor-pointer">
                             Delete
                             <DropdownMenuShortcut><TrashIcon color="red" className="h-5 w-5" fontSize={20} /></DropdownMenuShortcut>
                         </DropdownMenuItem>

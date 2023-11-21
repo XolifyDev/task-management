@@ -29,6 +29,7 @@ import { eq } from 'drizzle-orm';
 import { toast } from "react-hot-toast"
 import { useSession } from 'next-auth/react';
 import { Textarea } from '../ui/textarea';
+import { createCompany } from '@/lib/db/actions';
 
 type Props = {
     open: boolean;
@@ -52,24 +53,24 @@ const CreateCompanyModal = ({ open, setOpen }: Props) => {
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        // const company = await createCompany(values);
+        const company = await createCompany(values);
 
-        // // @ts-ignore
-        // if (company?.error) return toast.error(company?.error?.message, {
-        //     style: {
-        //         backgroundColor: "#333",
-        //         color: "white",
-        //     },
-        // });
+        // @ts-ignore
+        if (company?.error) return toast.error(company?.error?.message, {
+            style: {
+                backgroundColor: "#333",
+                color: "white",
+            },
+        });
 
 
-        // setOpen(false);
-        // return toast.success("Company created!", {
-        //     style: {
-        //         backgroundColor: "#333",
-        //         color: "white",
-        //     },
-        // });
+        setOpen(false);
+        return toast.success("Company created!", {
+            style: {
+                backgroundColor: "#333",
+                color: "white",
+            },
+        });
     }
 
     return (
